@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Paws & Claws Animal Rescue</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="ss.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fff;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* Hero Image */
+        .hero-section {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+            margin: 10px 0 0 0;
+        }
+
+        /* Mission Sections */
+        .mission-container {
+            width: 100%;
+            padding: 0 10px;
+            margin: 20px 0;
+        }
+
+        .mission {
+            background-color: rgba(255, 235, 238, 0.7);
+            padding: 30px 20px;
+            max-width: 100%;
+            margin: 10px auto;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            line-height: 1.8;
+        }
+
+        .mission h1 {
+            color: #C62828;
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .mission p,
+        .mission ul {
+            color: #6D4C41;
+            font-size: 16px;
+            margin-bottom: 15px;
+            text-align: left;
+            line-height: 1.6;
+        }
+
+        .mission ul {
+            padding-left: 25px;
+        }
+
+        .mission li {
+            margin-bottom: 10px;
+        }
+
+        /* Motto Section */
+        .moto-section {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, rgba(198, 40, 40, 0.1) 0%, rgba(183, 28, 28, 0.1) 100%);
+            margin: 20px 0;
+        }
+
+        .moto-title {
+            color: #C62828;
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+            margin-bottom: 15px;
+        }
+
+        .moto-tagline {
+            content: "Rescue • Heal • Protect";
+            display: block;
+            font-size: 28px;
+            font-weight: 900;
+            color: #B71C1C;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
+            letter-spacing: 1.5px;
+        }
+
+        /* Footer */
+        footer {
+            background: #C62828;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            font-size: 14px;
+        }
+
+        /* Chatbot Styles */
+        .chatbot-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #C62828 0%, #B71C1C 100%);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            z-index: 9999;
+            border: none;
+            color: white;
+            padding: 0;
+            outline: none;
+            touch-action: manipulation;
+        }
+
+        .chatbot-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .chatbot-icon:active {
+            transform: scale(0.95);
+        }
+
+        .chatbot-window {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
+            display: none;
+            flex-direction: column;
+            z-index: 9998;
+            animation: slideUp 0.3s ease-out;
+            overflow: hidden;
+        }
+
+        .chatbot-window.active {
+            display: flex;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chatbot-header {
+            background: linear-gradient(135deg, #C62828 0%, #B71C1C 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .chatbot-header h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .chatbot-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            transition: 0.3s;
+            padding: 0;
+            outline: none;
+            touch-action: manipulation;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chatbot-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .message {
+            padding: 10px 14px;
+            border-radius: 10px;
+            max-width: 80%;
+            word-wrap: break-word;
+            font-size: 14px;
+            line-height: 1.4;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .bot-message {
+            background: #f0f0f0;
+            color: #333;
+            align-self: flex-start;
+        }
+
+        .user-message {
+            background: linear-gradient(135deg, #C62828 0%, #B71C1C 100%);
+            color: white;
+            align-self: flex-end;
+        }
+
+        .chatbot-input-area {
+            padding: 15px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .chatbot-input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 2px solid #ddd;
+            border-radius: 20px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+            outline: none;
+        }
+
+        .chatbot-input:focus {
+            outline: none;
+            border-color: #C62828;
+            box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.1);
+        }
+
+        .chatbot-send {
+            background: linear-gradient(135deg, #C62828 0%, #B71C1C 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.3s;
+            outline: none;
+            padding: 0;
+            touch-action: manipulation;
+            flex-shrink: 0;
+        }
+
+        .chatbot-send:hover {
+            transform: scale(1.05);
+        }
+
+        .chatbot-send:active {
+            transform: scale(0.95);
+        }
+
+        /* Tablet Responsive (768px and below) */
+        @media (max-width: 768px) {
+            .mission h1 {
+                font-size: 24px;
+            }
+
+            .mission p,
+            .mission ul {
+                font-size: 15px;
+            }
+
+            .mission {
+                padding: 25px 15px;
+                margin: 15px 0;
+            }
+
+            .moto-title {
+                font-size: 32px;
+            }
+
+            .moto-tagline {
+                font-size: 24px;
+            }
+
+            .chatbot-window {
+                width: 90vw;
+                height: 450px;
+                bottom: 80px;
+                right: 5vw;
+                left: auto;
+            }
+
+            .chatbot-icon {
+                width: 55px;
+                height: 55px;
+                font-size: 26px;
+                bottom: 15px;
+                right: 15px;
+            }
+
+            .message {
+                max-width: 85%;
+            }
+        }
+
+        /* Mobile Responsive (480px and below) */
+        @media (max-width: 480px) {
+            body {
+                font-size: 14px;
+            }
+
+            .mission-container {
+                padding: 0 5px;
+                margin: 15px 0;
+            }
+
+            .mission {
+                padding: 20px 12px;
+                margin: 10px 5px;
+                border-radius: 8px;
+                background-color: rgba(255, 235, 238, 0.8);
+            }
+
+            .mission h1 {
+                font-size: 20px;
+                margin-bottom: 15px;
+                line-height: 1.3;
+            }
+
+            .mission p,
+            .mission ul {
+                font-size: 14px;
+                line-height: 1.5;
+                margin-bottom: 10px;
+            }
+
+            .mission ul {
+                padding-left: 20px;
+            }
+
+            .mission li {
+                margin-bottom: 8px;
+            }
+
+            .hero-image {
+                border-radius: 6px;
+                margin: 5px 0 0 0;
+            }
+
+            .moto-section {
+                padding: 30px 15px;
+                margin: 15px 0;
+            }
+
+            .moto-title {
+                font-size: 28px;
+                margin-bottom: 12px;
+            }
+
+            .moto-tagline {
+                font-size: 22px;
+            }
+
+            footer {
+                padding: 15px 10px;
+                font-size: 12px;
+            }
+
+            .chatbot-window {
+                width: 92vw;
+                height: 380px;
+                bottom: 70px;
+                right: 4vw;
+                left: auto;
+                max-height: 55vh;
+            }
+
+            .chatbot-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 22px;
+                bottom: 10px;
+                right: 10px;
+            }
+
+            .chatbot-header h3 {
+                font-size: 16px;
+            }
+
+            .chatbot-header {
+                padding: 15px;
+            }
+
+            .chatbot-close {
+                font-size: 24px;
+            }
+
+            .chatbot-messages {
+                padding: 10px;
+                gap: 8px;
+            }
+
+            .message {
+                max-width: 88%;
+                font-size: 13px;
+                padding: 8px 11px;
+            }
+
+            .chatbot-input-area {
+                padding: 10px;
+                gap: 6px;
+            }
+
+            .chatbot-input {
+                padding: 8px 11px;
+                font-size: 12px;
+                border-radius: 18px;
+            }
+
+            .chatbot-send {
+                width: 36px;
+                height: 36px;
+                min-width: 36px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <script src="auth.js"></script>
+    <script>
+        // Require authentication before accessing the site
+        if (!requireAuth()) {
+            // Redirect happens in requireAuth function
+        }
+    </script>
+
+    <!-- Navigation -->
+    <nav id="nav1">
+        <img src="images/logo.jpeg" alt="Logo" class="nav-logo">
+        <a href="index.html">HOME</a>
+        <a href="aboutus.html">ABOUT US</a>
+        <a href="whatwedo.html">WHAT WE DO</a>
+        <a href="adopt.html">ADOPT</a>
+        <a href="faq.html">FAQs</a>
+        <a href="contactus.html">CONTACT US</a>
+        <a href="rescue.html" class="cta">RESCUE</a>
+        <a href="donate.html" class="cta">DONATE</a>
+        <div class="profile-container">
+            <button id="profileBtn" class="profile-btn">Profile</button>
+            <div id="profileModal" class="profile-modal">
+                <div class="profile-content">
+                    <span class="close-profile">&times;</span>
+                    <h2>User Profile</h2>
+                    <div class="profile-info">
+                        <p><strong>Name:</strong> <span id="profileName">-</span></p>
+                        <p><strong>Email:</strong> <span id="profileEmail">-</span></p>
+                        <p><strong>Role:</strong> <span id="profileRole">-</span></p>
+                    </div>
+                    <button id="logoutBtn" class="logout-btn">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Image -->
+    <div class="hero-section">
+        <img class="hero-image" src="https://images.unsplash.com/photo-1552036354-d0ee14b417e0?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Animal Rescue">
+    </div>
+
+    <!-- Mission Section 1 -->
+    <div class="mission-container">
+        <section class="mission">
+            <h1>🐾 IMPORTANCE OF ANIMAL RESCUE</h1>
+            <p>Animal rescue plays a vital role in building a compassionate and responsible society. Every day, countless animals suffer due to abandonment, accidents, abuse, or lack of care. Rescue systems help bridge the gap between animals in distress and the people who can save them.</p>
+            <ul>
+                <li><strong>Saves Lives:</strong> Emergency response for animals in danger</li>
+                <li><strong>Reduces Suffering:</strong> Medical care and rehabilitation</li>
+                <li><strong>Promotes Animal Welfare Awareness:</strong> Education and community engagement</li>
+                <li><strong>Builds a Humane Society:</strong> Creating compassionate communities</li>
+            </ul>
+        </section>
+    </div>
+
+    <!-- Mission Section 2 -->
+    <div class="mission-container">
+        <section class="mission">
+            <h1>🎯 OVERVIEW OF OUR MISSION</h1>
+            <p>Our mission is to protect, rescue, and rehabilitate animals in need by creating a safe, compassionate, and effective support system. We work to ensure that every injured, abandoned, or distressed animal receives timely medical care, proper nourishment, and a chance to live a healthy, happy life.</p>
+            <p>We strive to build a community where people are aware, responsible, and actively involved in animal welfare. Through rescue operations, adoption programs, foster networks, and educational initiatives, we aim to reduce animal suffering and promote kindness toward all living beings.</p>
+            <p>At the heart of our mission is a simple belief — every life matters, and every animal deserves love, dignity, and protection.</p>
+        </section>
+    </div>
+
+    <!-- Motto Section -->
+    <div class="moto-section">
+        <h2 class="moto-title">OUR MOTTO</h2>
+        <p class="moto-tagline">Rescue • Heal • Protect</p>
+    </div>
+
+    <!-- Chatbot -->
+    <button class="chatbot-icon" id="chatbotIcon" title="Chat with us">💬</button>
+    <div class="chatbot-window" id="chatbotWindow">
+        <div class="chatbot-header">
+            <h3>Paws & Claws Support</h3>
+            <button class="chatbot-close" id="chatbotClose">&times;</button>
+        </div>
+        <div class="chatbot-messages" id="chatbotMessages">
+            <div class="message bot-message">Hi! 👋 Welcome to Paws & Claws Animal Rescue. How can I help you today?</div>
+        </div>
+        <div class="chatbot-input-area">
+            <input type="text" class="chatbot-input" id="chatbotInput" placeholder="Type message...">
+            <button class="chatbot-send" id="chatbotSend">➤</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Paws and Claws Animal Rescue. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Wait for DOM to fully load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Chatbot functionality
+            const chatbotIcon = document.getElementById('chatbotIcon');
+            const chatbotWindow = document.getElementById('chatbotWindow');
+            const chatbotClose = document.getElementById('chatbotClose');
+            const chatbotInput = document.getElementById('chatbotInput');
+            const chatbotSend = document.getElementById('chatbotSend');
+            const chatbotMessages = document.getElementById('chatbotMessages');
+
+            if (chatbotIcon && chatbotWindow) {
+                // Toggle chatbot window
+                chatbotIcon.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    chatbotWindow.classList.toggle('active');
+                    if (chatbotWindow.classList.contains('active')) {
+                        setTimeout(() => chatbotInput.focus(), 100);
+                    }
+                });
+
+                // Close chatbot
+                chatbotClose.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    chatbotWindow.classList.remove('active');
+                });
+
+                // Chatbot responses
+                const responses = {
+                    'rescue': 'To report an animal in distress, click on the RESCUE button. Our team responds immediately!',
+                    'adopt': 'Visit our ADOPT page to find your perfect animal companion!',
+                    'donate': 'Your donations save lives! Click DONATE to help us continue our mission.',
+                    'help': 'I can help with: rescue requests, adoption, donations, and FAQs.',
+                    'contact': 'Visit our CONTACT US page for phone, email, and address information.',
+                    'hours': 'We operate 24/7 for emergencies. Inquiries: Mon-Fri 9AM-6PM',
+                    'emergency': 'For emergencies, click RESCUE or contact us immediately!',
+                    'faq': 'Check our FAQs page for common questions about rescue and adoption.',
+                    'hi': 'Hi! 👋 How can I help you today?',
+                    'hello': 'Hello! Welcome to Paws & Claws. What can I help with?',
+                    'thanks': "You're welcome! Feel free to ask anything else.",
+                    'thank you': "You're welcome! We appreciate your support!",
+                };
+
+                function getBotResponse(userInput) {
+                    const input = userInput.toLowerCase();
+                    for (let key in responses) {
+                        if (input.includes(key)) {
+                            return responses[key];
+                        }
+                    }
+                    return 'Thanks for your question! Visit our website pages or contact us for more info. How else can I help?';
+                }
+
+                function addMessage(text, isUser) {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+                    messageDiv.textContent = text;
+                    chatbotMessages.appendChild(messageDiv);
+                    setTimeout(() => {
+                        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+                    }, 0);
+                }
+
+                function sendMessage() {
+                    const message = chatbotInput.value.trim();
+                    if (message === '') return;
+
+                    addMessage(message, true);
+                    chatbotInput.value = '';
+
+                    setTimeout(() => {
+                        const response = getBotResponse(message);
+                        addMessage(response, false);
+                    }, 500);
+                }
+
+                chatbotSend.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    sendMessage();
+                });
+
+                chatbotInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        sendMessage();
+                    }
+                });
+            }
+
+            // Profile functionality
+            const profileBtn = document.getElementById('profileBtn');
+            const profileModal = document.getElementById('profileModal');
+            const closeProfile = document.querySelector('.close-profile');
+            const logoutBtn = document.getElementById('logoutBtn');
+
+            if (profileBtn && profileModal) {
+                const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+                if (currentUser.name) {
+                    document.getElementById('profileName').textContent = currentUser.name;
+                    document.getElementById('profileEmail').textContent = currentUser.email;
+                    document.getElementById('profileRole').textContent = currentUser.isAdmin ? 'Admin' : 'User';
+                }
+
+                profileBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    profileModal.classList.toggle('active');
+                });
+
+                closeProfile.addEventListener('click', function() {
+                    profileModal.classList.remove('active');
+                });
+
+                window.addEventListener('click', function(event) {
+                    if (event.target === profileModal) {
+                        profileModal.classList.remove('active');
+                    }
+                });
+
+                logoutBtn.addEventListener('click', function() {
+                    localStorage.removeItem('currentUser');
+                    localStorage.removeItem('authToken');
+                    window.location.href = 'login.html';
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
